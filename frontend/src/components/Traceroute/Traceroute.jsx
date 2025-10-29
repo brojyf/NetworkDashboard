@@ -19,10 +19,7 @@ export default function Traceroute({data}) {
           <span className="hop-number">{hopCount}</span> 
         </div>
 
-        <button
-          className="toggle-btn"
-          onClick={() => setShowTable(!showTable)}
-        >
+        <button className="toggle-btn" onClick={() => setShowTable(!showTable)}>
           {showTable ? "Hide" : "More"}
         </button>
       </div>
@@ -31,7 +28,8 @@ export default function Traceroute({data}) {
         {hopSequence}
       </div>
 
-      {showTable && (
+      {/* ✅ 不再条件渲染 DOM，而是改变高度 */}
+      <div className={`table-wrapper ${showTable ? "open" : "closed"}`}>
         <table className="traceroute-table"> 
           <thead> 
             <tr>
@@ -56,7 +54,7 @@ export default function Traceroute({data}) {
             ))}
           </tbody>
         </table>
-      )}
+      </div>
     </div>
   );
 }

@@ -49,6 +49,12 @@ function App() {
         <div className="header">
           <Header />
         </div>
+
+        <h1>Selected: Search Engine.</h1>
+
+        <Section
+          data={data}
+         />
         <Section
           data={data}
          />
