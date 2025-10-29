@@ -1,0 +1,72 @@
+.traceroute-container {
+  margin-top: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Hop summary / path display */
+.hop-summary {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.hop-summary span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.hop-number {
+  font-weight: 600;
+  color: #007aff;
+  margin-left: 6px;
+}
+
+/* Arrow path display block */
+.hop-path {
+  background: #f7f9fc;
+  padding: 14px 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  color: #2b2b2b;
+  border: 1px solid #ebedf0;
+  word-break: break-all;
+}
+
+/* ✅ 扁平表格 */
+.traceroute-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+/* 表头：淡灰色底，扁平 */
+.traceroute-table thead th {
+  text-align: left;
+  padding: 12px 12px;
+  font-weight: 600;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+/* 每一行变成卡片式 + hover效果 */
+.traceroute-table tbody tr {
+  background: white;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.traceroute-table tbody tr:hover {
+  background: #f6faff;
+}
+
+.traceroute-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #ebebeb;
+  color: #333;
+}
+
+/* 右侧 latency 用等宽字体，看起来更整齐 */
+.traceroute-table td:last-child {
+  font-family: "SF Mono", "Roboto Mono", monospace;
+}

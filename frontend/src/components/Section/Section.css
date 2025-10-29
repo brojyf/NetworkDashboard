@@ -1,0 +1,10 @@
+.charts-row {
+  display: flex;     
+  gap: 16px;         
+  width: 100%;
+}
+
+.charts-row > div {
+  flex: 1;          
+  min-width: 0;          
+}
