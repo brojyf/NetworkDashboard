@@ -2,20 +2,22 @@ import LineChart from "../Chart/Chart";
 import Traceroute from "../Traceroute/Traceroute";
 import "./Section.css"
 
-export default function Section({website, lat, packl, tr}) {
+export default function Section({data}) {
     return (
         <div>
-            <h1>{website}</h1>
+            <h1>{data.website}</h1>
             <div className="charts-row">
                 <LineChart
-                  graphData={lat}
+                  graphData={data.latency}
                  />
                 <LineChart
-                  graphData={packl}
+                  graphData={data.package_lost}
                  />
             </div>
             <div>
-                <Traceroute />
+                <Traceroute
+                  data={data.hops}
+                 />
             </div>
         </div>
     );

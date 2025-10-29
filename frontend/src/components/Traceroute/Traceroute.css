@@ -34,14 +34,12 @@
   word-break: break-all;
 }
 
-/* ✅ 扁平表格 */
 .traceroute-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
 
-/* 表头：淡灰色底，扁平 */
 .traceroute-table thead th {
   text-align: left;
   padding: 12px 12px;
@@ -50,7 +48,6 @@
   border-bottom: 1px solid #e6e6e6;
 }
 
-/* 每一行变成卡片式 + hover效果 */
 .traceroute-table tbody tr {
   background: white;
   transition: background-color 0.15s ease-in-out;
@@ -66,7 +63,34 @@
   color: #333;
 }
 
-/* 右侧 latency 用等宽字体，看起来更整齐 */
 .traceroute-table td:last-child {
   font-family: "SF Mono", "Roboto Mono", monospace;
+}
+
+.hop-header {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.hop-summary {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.toggle-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  background: #007aff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: opacity .2s ease-in-out;
+}
+
+.toggle-btn:hover {
+  opacity: 0.9;
 }
