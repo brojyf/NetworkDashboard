@@ -27,7 +27,7 @@ export default function LineChart({graphData}) {
         maintainAspectRatio: false, 
       },
     });
-    }, 
+  }, 
     [graphData.data, graphData.labels, graphData.title]
   );
 
