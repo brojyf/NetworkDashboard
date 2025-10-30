@@ -6,7 +6,8 @@ export default function LineChart({graphData}) {
   const chartInstance = useRef(null);
 
   useEffect(() => {
-    if (chartInstance.current) chartInstance.current.destroy();
+    if (chartInstance.current)
+        chartInstance.current.destroy();
 
     chartInstance.current = new Chart(chartRef.current, {
       type: "line",
@@ -26,7 +27,9 @@ export default function LineChart({graphData}) {
         maintainAspectRatio: false, 
       },
     });
-  }, []);
+    }, 
+    [graphData.data, graphData.labels, graphData.title]
+  );
 
   return (
     <div className="chart-box">
