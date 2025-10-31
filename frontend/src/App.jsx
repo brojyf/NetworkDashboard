@@ -1,9 +1,9 @@
 import './App.css'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
 import Section from "./components/Section/Section"
 import SelectBox from "./components/SelectBox/SelectBox"
-import { mockData } from "./MockData.js"
+import { mockData } from "./MockData"
 
 function App() {
 
@@ -17,7 +17,38 @@ function App() {
   };
 
   const [category, setCategory] = useState("");
-  const data = mockData[categoryMap[category]] || null;
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!category) return;
+
+    async function fetchData() {
+      setLoading(true);
+      setError(null);
+      setData(null);
+
+      try {
+        const res = await fetch(`http://localhost:8080/api/query?category=${encodeURIComponent(category)}`);
+
+        // if (!res.ok) {
+        //   throw new Error(`Server error: ${res.status}`);
+        // }
+
+        // const json = await res.json();
+        // setData(json.data); 
+        const serverData = mockData[categoryMap[category]] || null;
+        setData(serverData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [category]);
 
   return (
     <div>
@@ -28,13 +59,15 @@ function App() {
       <SelectBox value={category} onChange={setCategory} />
 
       <div className="charts">
+
+        {loading && <p>Loading...</p>}
+        {error && <p style={{ color: "red" }}>Error: {error}</p>}
         {data && data.map((item, index) => (
-        <Section key={index} data={item} />
-      ))}
+          <Section key={index} data={item} />
+        ))}
       </div>
-      
     </div>
   )
 }
 
-export default App
+export default App;

@@ -5,7 +5,7 @@ info:
   description: Returns website network metrics including latency, packet loss, and traceroute hops.
 
 servers:
-  - url: http://localhost:3000/api
+  - url: http://localhost:8080/api
     description: Dev Server
   - url: https://pat-jiang.dpdns.org/nd
     description: Website Server
