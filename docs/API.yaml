@@ -33,7 +33,6 @@ paths:
                   properties:
                     website:
                       type: string
-
                     latency:
                       type: object
                       properties:

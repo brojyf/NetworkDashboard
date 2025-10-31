@@ -1,0 +1,23 @@
+.select-label {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.select-dropdown {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.select-dropdown:hover {
+  border-color: #888;
+}
+
+.select-dropdown:focus {
+  border-color: #005eff;
+  box-shadow: 0 0 3px rgba(123, 150, 196, 0.5);
+}

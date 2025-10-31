@@ -2,9 +2,10 @@
   width: 100%;
 }
 
-.container {
-  .container {
-  display: flex;    /* 开启横向排列 */
-  gap: 10px;        /* 元素之间间距（可选） */
-}
+/* .charts {
+  overflow-x: auto;
+} */
+
+body {
+  overflow-y: scroll; 
 }

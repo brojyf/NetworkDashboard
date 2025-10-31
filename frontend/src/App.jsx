@@ -3,66 +3,37 @@ import { useState } from "react";
 import Header from "./components/Header/Header";
 import Section from "./components/Section/Section"
 import SelectBox from "./components/SelectBox/SelectBox"
+import { mockData } from "./MockData.js"
 
 function App() {
 
-  const data =  {
-    website: "google.com",
-    latency: {
-      title: "Latency (ms)",
-      labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
-      data: [120, 90, 150, 80, 130]
-    },
-    package_lost: {
-      title: "Package Loss (%)",
-      labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
-      data: [1, 3, 5, 0, 0]
-    },
-    hops: [
-      {
-        hop: 1,
-        ip: "192.168.1.1",
-        hostname: "router.home",
-        latency: [1.12, 0.98, 1.05]
-     },
-      {
-        hop: 2,
-        ip: "10.22.0.1",
-        hostname: "isp-gateway.local",
-        latency: [9.8, 10.1, 9.9]
-      },
-      {
-        hop: 3,
-        ip: null,
-        hostname: null,
-        latency: ["*", "*", "*"]
-      },
-      {
-        hop: 4,
-        ip: "142.250.68.14",
-        hostname: "google.com",
-        latency: [22.4, 24.1, 23.5]
-      }
-    ]
-  }
+  const categoryMap = {
+    "Search Engine": "searchEngine",
+    "Video Streaming": "videoStreaming",
+    "AI": "ai",
+    "CDN": "cdn",
+    "Social": "social",
+    "Cloud": "cloud",
+  };
 
-  const [category, setCategory] = useState(""); 
+  const [category, setCategory] = useState("");
+  const data = mockData[categoryMap[category]] || null;
 
   return (
-      <div>
-        <div className="header">
-          <Header />
-        </div>
-
-        <SelectBox value={category} onChange={setCategory} />
-
-        <Section
-          data={data}
-         />
-        <Section
-          data={data}
-         />
+    <div>
+      <div className="header">
+        <Header />
       </div>
+
+      <SelectBox value={category} onChange={setCategory} />
+
+      <div className="charts">
+        {data && data.map((item, index) => (
+        <Section key={index} data={item} />
+      ))}
+      </div>
+      
+    </div>
   )
 }
 
