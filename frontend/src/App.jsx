@@ -1,6 +1,8 @@
 import './App.css'
+import { useState } from "react";
 import Header from "./components/Header/Header";
 import Section from "./components/Section/Section"
+import SelectBox from "./components/SelectBox/SelectBox"
 
 function App() {
 
@@ -44,13 +46,15 @@ function App() {
     ]
   }
 
+  const [category, setCategory] = useState(""); 
+
   return (
       <div>
         <div className="header">
           <Header />
         </div>
 
-        <h1>Selected: Search Engine.</h1>
+        <SelectBox value={category} onChange={setCategory} />
 
         <Section
           data={data}
