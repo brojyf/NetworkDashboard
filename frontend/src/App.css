@@ -2,10 +2,7 @@
   width: 100%;
 }
 
-/* .charts {
-  overflow-x: auto;
-} */
-
-body {
-  overflow-y: scroll; 
+* {
+  margin: 0;
+  padding: 0;
 }

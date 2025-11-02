@@ -38,10 +38,11 @@ function App() {
 
         // const json = await res.json();
         // setData(json.data); 
-        const serverData = mockData[categoryMap[category]] || null;
-        setData(serverData);
+
       } catch (err) {
-        setError(err.message);
+        // setError(err.message);
+          const serverData = mockData[categoryMap[category]] || null;
+          setData(serverData);
       } finally {
         setLoading(false);
       }
@@ -52,9 +53,7 @@ function App() {
 
   return (
     <div>
-      <div className="header">
-        <Header />
-      </div>
+      <Header />
 
       <SelectBox value={category} onChange={setCategory} />
 
