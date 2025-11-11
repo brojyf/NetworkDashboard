@@ -23,7 +23,7 @@ paths:
             enum: ["search_engine", "cdn", "video_steam", "social", "cloud", "ai"]
       responses:
         "200":
-          description: network data from serveral websites
+          description: network data from server websites
           content:
             application/json:
               schema:
