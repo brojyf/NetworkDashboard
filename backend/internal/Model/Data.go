@@ -10,10 +10,10 @@ type ServerData struct {
 }
 
 type WebsiteData struct {
-	Website     string      `json:"website"`
-	Latency     MetricBlock `json:"latency"`
-	PackageLost MetricBlock `json:"package_lost"`
-	Hops        []Hop       `json:"hops"`
+	Website string      `json:"website"`
+	Latency MetricBlock `json:"latency"`
+	Jitter  MetricBlock `json:"jitter"`
+	Hops    []Hop       `json:"hops"`
 }
 
 type MetricBlock struct {

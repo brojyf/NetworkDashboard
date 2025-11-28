@@ -13,8 +13,8 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
-				Title:  "Package Loss (%)",
+			Jitter: MetricBlock{
+				Title:  "Jitter (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
 			},
@@ -32,8 +32,8 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
-				Title:  "Package Loss (%)",
+			Jitter: MetricBlock{
+				Title:  "Jitter (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
 			},
@@ -54,7 +54,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
@@ -73,7 +73,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
@@ -95,7 +95,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
@@ -114,7 +114,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
@@ -136,7 +136,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
@@ -156,7 +156,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
@@ -178,7 +178,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
@@ -197,7 +197,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
@@ -219,7 +219,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
@@ -239,7 +239,7 @@ var MockData = ServerData{
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{120, 90, 150, 80, 130},
 			},
-			PackageLost: MetricBlock{
+			Jitter: MetricBlock{
 				Title:  "Package Loss (%)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
 				Data:   []int{1, 3, 5, 0, 0},
