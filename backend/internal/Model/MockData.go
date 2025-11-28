@@ -7,7 +7,7 @@ func strPtr(s string) *string {
 var MockData = ServerData{
 	SearchEngine: []WebsiteData{
 		{
-			Website: "google.com",
+			Website: "www.google.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -26,7 +26,7 @@ var MockData = ServerData{
 			},
 		},
 		{
-			Website: "firefox.com",
+			Website: "www.bing.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -48,7 +48,7 @@ var MockData = ServerData{
 
 	AI: []WebsiteData{
 		{
-			Website: "chatgpt.com",
+			Website: "www.chatgpt.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -67,7 +67,7 @@ var MockData = ServerData{
 			},
 		},
 		{
-			Website: "gemini.com",
+			Website: "claud.ai",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -89,7 +89,7 @@ var MockData = ServerData{
 
 	CDN: []WebsiteData{
 		{
-			Website: "cloudflare.com",
+			Website: "www.cloudflare.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -108,7 +108,7 @@ var MockData = ServerData{
 			},
 		},
 		{
-			Website: "somethingCDN.com",
+			Website: "www.akamai.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -130,7 +130,7 @@ var MockData = ServerData{
 
 	Social: []WebsiteData{
 		{
-			Website: "facebook.com",
+			Website: "www.facebook.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -150,7 +150,7 @@ var MockData = ServerData{
 		},
 
 		{
-			Website: "instagram.com",
+			Website: "x.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -172,7 +172,7 @@ var MockData = ServerData{
 
 	Cloud: []WebsiteData{
 		{
-			Website: "icloud.com",
+			Website: "www.icloud.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -191,7 +191,7 @@ var MockData = ServerData{
 			},
 		},
 		{
-			Website: "google.drive.com",
+			Website: "drive.google.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -213,7 +213,7 @@ var MockData = ServerData{
 
 	VideoStreaming: []WebsiteData{
 		{
-			Website: "twitch.com",
+			Website: "www.youtube.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
@@ -233,7 +233,7 @@ var MockData = ServerData{
 		},
 
 		{
-			Website: "youtube.com",
+			Website: "www.netflix.com",
 			Latency: MetricBlock{
 				Title:  "Latency (ms)",
 				Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri"},
