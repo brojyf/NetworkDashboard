@@ -1,7 +1,8 @@
-import "./SelectBox.css";   
+import "./SelectBox.css";
 
-export default function SelectBox({ value, onChange }) {
+export default function SelectBox({ value, onChange, onRefresh, isRefreshing }) {
   const options = ["Search Engine", "CDN", "Video Streaming", "Social", "Cloud", "AI"];
+  const disableRefresh = !value || isRefreshing;
 
   return (
     <div className="select-wrapper">
@@ -24,6 +25,15 @@ export default function SelectBox({ value, onChange }) {
           </option>
         ))}
       </select>
+
+      <button
+        type="button"
+        className="refresh-button"
+        onClick={onRefresh}
+        disabled={disableRefresh}
+      >
+        Refresh
+      </button>
     </div>
   );
 }

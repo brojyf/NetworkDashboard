@@ -20,6 +20,7 @@ function App() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [refreshCounter, setRefreshCounter] = useState(0);
 
     useEffect(() => {
         if (!category) return;
@@ -46,7 +47,12 @@ function App() {
                 setLoading(false);
             }
         })();
-    }, [category]);
+    }, [category, refreshCounter]);
+
+    const handleRefresh = () => {
+        if (!category) return;
+        setRefreshCounter((count) => count + 1);
+    };
 
     const isDataArray = Array.isArray(data);
     const safeData = isDataArray ? data : [];
@@ -56,7 +62,12 @@ function App() {
             <Header />
 
             <div className="select-box-card">
-                <SelectBox value={category} onChange={setCategory} />
+                <SelectBox
+                    value={category}
+                    onChange={setCategory}
+                    onRefresh={handleRefresh}
+                    isRefreshing={loading}
+                />
             </div>
 
             <div className="charts">

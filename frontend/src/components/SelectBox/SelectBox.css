@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .select-label {
@@ -30,4 +31,34 @@
 .select-dropdown:focus {
   border-color: #4f46e5;
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+.refresh-button {
+  margin-left: auto;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  background: #007aff;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease;
+}
+
+.refresh-button:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.refresh-button:active {
+  transform: translateY(0);
+}
+
+.refresh-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  box-shadow: none;
+  background: #cbd5e1;
 }
