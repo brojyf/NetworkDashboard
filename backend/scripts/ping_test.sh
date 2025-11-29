@@ -8,6 +8,7 @@ OUTPUT_PING_FILE="$DATA_DIR/ping_results.csv"
 OUTPUT_HOP_FILE="$DATA_DIR/hop_results.csv"
 INTERVAL_SECONDS=60
 PING_COUNT=4
+HOP_LIMIT=15
 FILE="$CONFIG_DIR/websites.txt"
 rm -f "$OUTPUT_PING_FILE" "$OUTPUT_HOP_FILE"
 
@@ -46,13 +47,16 @@ ping_site() {
 
 traceroute_site() {
   local site="$1"
-  local hop printed hostname ip latency
+  local line hop ip hostname latency printed
+
   while IFS= read -r line; do
     # detect new hop start
+    if [[ "$line" =~ ^[[:space:]]*traceroute\ to ]]; then
+          continue
+        fi
     if [[ "$line" =~ ^[[:space:]]*([0-9]+)[[:space:]]+ ]]; then
       hop=${BASH_REMATCH[1]}
       printed=0
-      continue
     fi
 
     # timeout (* * *)
@@ -63,6 +67,8 @@ traceroute_site() {
       fi
       continue
     fi
+
+    # must not print twice for the same hop
     if [[ $printed -eq 1 ]]; then
       continue
     fi
@@ -70,6 +76,8 @@ traceroute_site() {
     hostname=""
     ip=""
     latency=""
+
+    # extract hostname + ip
     if [[ "$line" =~ ([a-zA-Z0-9\.\-]+)\ \(([0-9\.]+)\) ]]; then
       hostname="${BASH_REMATCH[1]}"
       ip="${BASH_REMATCH[2]}"
@@ -80,8 +88,9 @@ traceroute_site() {
       latency="${BASH_REMATCH[1]}"
     fi
 
-    echo "$site,$hop,$ip,$hostname,$latency"
+    echo "$site,$hop,$ip,$hostname,$latency" >> "$OUTPUT_HOP_FILE"
     printed=1
+
   done
 }
 
@@ -93,7 +102,7 @@ run_ping() {
 
 run_traceroute() {
   while IFS='=' read -r site site_type; do
-    traceroute_site "$site" < <(traceroute "$site") >> "$OUTPUT_HOP_FILE"
+    traceroute -m 10 "$site" 2>/dev/null | traceroute_site "$site"
   done < "$FILE"
 }
 

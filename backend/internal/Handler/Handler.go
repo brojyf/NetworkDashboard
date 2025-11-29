@@ -11,6 +11,7 @@ import (
 )
 
 const dataFilePath = "data/ping_results.csv"
+const hopFilePath = "data/hop_results.csv"
 const timeColumn = 0
 const siteColumn = 1
 const typeColumn = 2
@@ -53,18 +54,19 @@ type siteAccumulator struct {
 
 func Handler(c *gin.Context) {
 	category := c.Query("category")
+	hops := loadHopData()
 	a, b := getTargetRows(categoryMap[category])
-	c.JSON(200, mapToWebsiteData(a, b))
+	c.JSON(200, mapToWebsiteData(a, b, hops))
 }
 
-func mapToWebsiteData(a, b [][]string) []WebsiteData {
+func mapToWebsiteData(a, b [][]string, hops map[string][]Hop) []WebsiteData {
 	return []WebsiteData{
-		convertOneSite(a),
-		convertOneSite(b),
+		convertOneSite(a, hops),
+		convertOneSite(b, hops),
 	}
 }
 
-func convertOneSite(rows [][]string) WebsiteData {
+func convertOneSite(rows [][]string, hops map[string][]Hop) WebsiteData {
 	if len(rows) == 0 {
 		return WebsiteData{}
 	}
@@ -93,7 +95,7 @@ func convertOneSite(rows [][]string) WebsiteData {
 			Labels: acc.labels,
 			Data:   acc.jitter,
 		},
-		Hops: []Hop{},
+		Hops: hops[site],
 	}
 }
 
@@ -168,4 +170,71 @@ func reverseRows(rows [][]string) [][]string {
 		rows[i], rows[j] = rows[j], rows[i]
 	}
 	return rows
+}
+
+func loadHopData() map[string][]Hop {
+	file, err := os.Open(hopFilePath)
+	if err != nil {
+		log.Println("open hop file:", err)
+		return map[string][]Hop{}
+	}
+	defer func(file *os.File) {
+		if cerr := file.Close(); cerr != nil {
+			log.Println("close hop file:", cerr)
+		}
+	}(file)
+
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		log.Println("read hop csv:", err)
+		return map[string][]Hop{}
+	}
+	if len(records) <= 1 {
+		return map[string][]Hop{}
+	}
+
+	result := make(map[string][]Hop)
+	for _, row := range records[1:] {
+		if len(row) < 5 {
+			continue
+		}
+
+		site := row[0]
+		hopVal, err := strconv.Atoi(row[1])
+		if err != nil {
+			continue
+		}
+		ip := pointerIfNotEmpty(row[2])
+		hostname := pointerIfNotEmpty(row[3])
+
+		var latency []interface{}
+		if v, err := strconv.ParseFloat(row[4], 64); err == nil {
+			latency = append(latency, v)
+		} else {
+			latency = []interface{}{}
+		}
+
+		result[site] = append(result[site], Hop{
+			Hop:      hopVal,
+			IP:       ip,
+			Hostname: hostname,
+			Latency:  latency,
+		})
+	}
+
+	for site := range result {
+		sort.Slice(result[site], func(i, j int) bool {
+			return result[site][i].Hop < result[site][j].Hop
+		})
+	}
+
+	return result
+}
+
+func pointerIfNotEmpty(val string) *string {
+	if val == "" {
+		return nil
+	}
+	return &val
 }

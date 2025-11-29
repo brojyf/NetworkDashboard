@@ -1,5 +1,5 @@
 google.com=SearchEngine
-bing.com=SearchEngine
+duckduckgo.com=SearchEngine
 chatgpt.com=AI
 claude.ai=AI
 cloudflare.com=CDN
