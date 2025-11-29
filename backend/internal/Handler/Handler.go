@@ -34,9 +34,9 @@ type WebsiteData struct {
 	Hops    []Hop       `json:"hops"`
 }
 type MetricBlock struct {
-	Title  string   `json:"title"`
-	Labels []string `json:"labels"`
-	Data   []int    `json:"data"`
+	Title  string    `json:"title"`
+	Labels []string  `json:"labels"`
+	Data   []float64 `json:"data"`
 }
 type Hop struct {
 	Hop      int           `json:"hop"`
@@ -47,8 +47,8 @@ type Hop struct {
 
 type siteAccumulator struct {
 	labels  []string
-	latency []int
-	jitter  []int
+	latency []float64
+	jitter  []float64
 }
 
 func Handler(c *gin.Context) {
@@ -71,18 +71,12 @@ func convertOneSite(rows [][]string) WebsiteData {
 
 	site := rows[0][siteColumn]
 	acc := siteAccumulator{}
-
 	for _, row := range rows {
-		// col 0: timestamp label
 		acc.labels = append(acc.labels, row[timeColumn])
-
-		// col 3: latency
-		if v, err := strconv.Atoi(row[latencyColumn]); err == nil {
+		if v, err := strconv.ParseFloat(row[latencyColumn], 64); err == nil {
 			acc.latency = append(acc.latency, v)
 		}
-
-		// col 4: jitter
-		if v, err := strconv.Atoi(row[jitterColumn]); err == nil {
+		if v, err := strconv.ParseFloat(row[jitterColumn], 64); err == nil {
 			acc.jitter = append(acc.jitter, v)
 		}
 	}
@@ -99,7 +93,7 @@ func convertOneSite(rows [][]string) WebsiteData {
 			Labels: acc.labels,
 			Data:   acc.jitter,
 		},
-		Hops: []Hop{}, // 忽略 hops
+		Hops: []Hop{},
 	}
 }
 
@@ -110,7 +104,12 @@ func getTargetRows(t string) ([][]string, [][]string) {
 		log.Println("open file:", err)
 		return nil, nil
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			log.Println("close file:", err)
+		}
+	}(file)
 	reader := csv.NewReader(file)
 	records, err := reader.ReadAll()
 	if err != nil {
