@@ -8,10 +8,10 @@ import SelectBox from "./components/SelectBox/SelectBox";
 const categoryMap = {
     "Search Engine": "search_engine",
     "Video Streaming": "video_streaming",
-    AI: "ai",
-    CDN: "cdn",
-    Social: "social",
-    Cloud: "cloud",
+    "AI": "ai",
+    "CDN": "cdn",
+    "Social": "social",
+    "Cloud": "cloud",
 };
 
 function App() {

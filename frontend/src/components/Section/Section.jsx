@@ -11,7 +11,7 @@ export default function Section({data}) {
                   graphData={data.latency}
                  />
                 <LineChart
-                  graphData={data.package_lost}
+                  graphData={data.jitter}
                  />
             </div>
             <div>

@@ -28,7 +28,6 @@ export default function Traceroute({data}) {
         {hopSequence}
       </div>
 
-      {/* ✅ 不再条件渲染 DOM，而是改变高度 */}
       <div className={`table-wrapper ${showTable ? "open" : "closed"}`}>
         <table className="traceroute-table"> 
           <thead> 
