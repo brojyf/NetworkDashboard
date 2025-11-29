@@ -17,7 +17,7 @@ const categoryMap = {
 function App() {
 
     const [category, setCategory] = useState("");
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -48,19 +48,55 @@ function App() {
         })();
     }, [category]);
 
+    const isDataArray = Array.isArray(data);
+    const safeData = isDataArray ? data : [];
+
     return (
-        <div>
+        <div className="container">
             <Header />
 
-            <SelectBox value={category} onChange={setCategory} />
+            <div className="select-box-card">
+                <SelectBox value={category} onChange={setCategory} />
+            </div>
 
             <div className="charts">
-                {loading && <p>Loading...</p>}
-                {error && <p style={{ color: "red" }}>Error: {error}</p>}
+                {!category && (
+                    <div className="placeholder-box">
+                        <p className="placeholder">Select a category to load data</p>
+                    </div>
+                )}
 
-                {data &&
-                    data.map((item, index) => <Section key={index} data={item} />)}
+                {category && (
+                    <>
+                        {loading && <p>Loading...</p>}
+
+                        {!loading && error && (
+                            <p style={{ color: "red" }}>Error: {error}</p>
+                        )}
+
+                        {!loading && !error && (!data || !isDataArray) && (
+                            <div className="placeholder-box">
+                                <p className="placeholder">
+                                    Server is still loading. Try again later.
+                                </p>
+                            </div>
+                        )}
+
+                        {!loading && !error && isDataArray && data.length === 0 && (
+                            <div className="placeholder-box">
+                                <p className="placeholder">No data available</p>
+                            </div>
+                        )}
+
+                        {!loading && !error && isDataArray && data.length > 0 && (
+                            safeData.map((item, index) => (
+                                <Section key={index} data={item} />
+                            ))
+                        )}
+                    </>
+                )}
             </div>
+
         </div>
     );
 }

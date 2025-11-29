@@ -4,7 +4,7 @@ export default function SelectBox({ value, onChange }) {
   const options = ["Search Engine", "CDN", "Video Streaming", "Social", "Cloud", "AI"];
 
   return (
-    <div>
+    <div className="select-wrapper">
       <label className="select-label">
         Category:
       </label>

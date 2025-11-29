@@ -6,6 +6,14 @@ export default function LineChart({graphData}) {
   const chartInstance = useRef(null);
 
   useEffect(() => {
+    if (
+      !graphData ||
+      !Array.isArray(graphData.data) ||
+      !Array.isArray(graphData.labels)
+    ) {
+      return;
+    }
+
     if (chartInstance.current)
         chartInstance.current.destroy();
 

@@ -6,6 +6,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -74,7 +75,8 @@ func convertOneSite(rows [][]string, hops map[string][]Hop) WebsiteData {
 	site := rows[0][siteColumn]
 	acc := siteAccumulator{}
 	for _, row := range rows {
-		acc.labels = append(acc.labels, row[timeColumn])
+		t := parseTime(row[timeColumn])
+		acc.labels = append(acc.labels, t.Format("15:04"))
 		if v, err := strconv.ParseFloat(row[latencyColumn], 64); err == nil {
 			acc.latency = append(acc.latency, v)
 		}
@@ -104,7 +106,7 @@ func getTargetRows(t string) ([][]string, [][]string) {
 	file, err := os.Open(dataFilePath)
 	if err != nil {
 		log.Println("open file:", err)
-		return nil, nil
+		return [][]string{}, [][]string{}
 	}
 	defer func(file *os.File) {
 		err := file.Close()
@@ -116,7 +118,7 @@ func getTargetRows(t string) ([][]string, [][]string) {
 	records, err := reader.ReadAll()
 	if err != nil {
 		log.Println("read csv:", err)
-		return nil, nil
+		return [][]string{}, [][]string{}
 	}
 	data := records[1:]
 
@@ -133,7 +135,9 @@ func getTargetRows(t string) ([][]string, [][]string) {
 
 	// 3. Top 5
 	sort.Slice(filtered, func(i, j int) bool {
-		return filtered[i][timeColumn] > filtered[j][timeColumn]
+		t1 := parseTime(filtered[i][timeColumn])
+		t2 := parseTime(filtered[j][timeColumn])
+		return t1.After(t2)
 	})
 	var siteA, siteB string
 	var resultA, resultB [][]string
@@ -237,4 +241,16 @@ func pointerIfNotEmpty(val string) *string {
 		return nil
 	}
 	return &val
+}
+
+func parseTime(s string) time.Time {
+	if t, err := time.Parse(time.RFC3339, s); err == nil {
+		return t
+	}
+	if t, err := time.Parse("15:04", s); err == nil {
+		now := time.Now()
+		return time.Date(now.Year(), now.Month(), now.Day(),
+			t.Hour(), t.Minute(), 0, 0, now.Location())
+	}
+	return time.Time{}
 }

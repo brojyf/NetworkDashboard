@@ -2,20 +2,24 @@ import { useState } from "react";
 import "./Traceroute.css"; 
 
 export default function Traceroute({data}) { 
+  const safeData = Array.isArray(data) ? data : [];
 
   const [showTable, setShowTable] = useState(false);
 
-  const hopCount = data.length;
-  const hopSequence = data
-    .map((hop) => hop.hostname || "-")
-    .join(" → ");
+  const hopCount = safeData.length;
+    const hopSequence = safeData.flatMap((hop, index) => [
+        hop.hostname || "-",
+        index < safeData.length - 1 && (
+            <span key={index} style={{ color: "purple" }}> → </span>
+        ),
+    ]);
 
   return ( 
     <div className="traceroute-container"> 
 
       <div className="hop-header">
         <div className="hop-summary"> 
-          <span>🔁 Total Hops: </span> 
+          <span>🔁 Total Hops (max: 10): </span>
           <span className="hop-number">{hopCount}</span> 
         </div>
 
@@ -39,7 +43,7 @@ export default function Traceroute({data}) {
             </tr>
           </thead>
           <tbody>
-            {data.map((hop, index) => (
+            {safeData.map((hop, index) => (
               <tr key={index}>
                 <td>{hop.hop}</td>
                 <td>{hop.ip || "-"}</td>

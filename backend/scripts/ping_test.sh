@@ -15,7 +15,7 @@ rm -f "$OUTPUT_PING_FILE" "$OUTPUT_HOP_FILE"
 ping_site() {
   local site="$1"
   local site_type="$2"
-  local timestamp=$(date +"%H:%M")
+  local timestamp=$(date -Iseconds)
 
   local ping_output
   if ! ping_output=$(ping -c "$PING_COUNT" "$site" 2>/dev/null); then
