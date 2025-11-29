@@ -1,25 +1,172 @@
 package Handler
 
 import (
-	"github.com/brojyf/NetworkDashboard/internal/model"
+	"encoding/csv"
+	"log"
+	"os"
+	"sort"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
-var dataMap = map[string]interface{}{
-	"ai":              model.MockData.AI,
-	"search_engine":   model.MockData.SearchEngine,
-	"cdn":             model.MockData.CDN,
-	"social":          model.MockData.Social,
-	"cloud":           model.MockData.Cloud,
-	"video_streaming": model.MockData.VideoStreaming,
+const dataFilePath = "data/ping_results.csv"
+const timeColumn = 0
+const siteColumn = 1
+const typeColumn = 2
+const latencyColumn = 3
+const jitterColumn = 4
+const pick = 5
+
+var categoryMap = map[string]string{
+	"search_engine":   "SearchEngine",
+	"ai":              "AI",
+	"cdn":             "CDN",
+	"social":          "Social",
+	"cloud":           "Cloud",
+	"video_streaming": "VideoStreaming",
+}
+
+type WebsiteData struct {
+	Website string      `json:"website"`
+	Latency MetricBlock `json:"latency"`
+	Jitter  MetricBlock `json:"jitter"`
+	Hops    []Hop       `json:"hops"`
+}
+type MetricBlock struct {
+	Title  string   `json:"title"`
+	Labels []string `json:"labels"`
+	Data   []int    `json:"data"`
+}
+type Hop struct {
+	Hop      int           `json:"hop"`
+	IP       *string       `json:"ip"`
+	Hostname *string       `json:"hostname"`
+	Latency  []interface{} `json:"latency"`
+}
+
+type siteAccumulator struct {
+	labels  []string
+	latency []int
+	jitter  []int
 }
 
 func Handler(c *gin.Context) {
 	category := c.Query("category")
+	a, b := getTargetRows(categoryMap[category])
+	c.JSON(200, mapToWebsiteData(a, b))
+}
 
-	if data, found := dataMap[category]; found {
-		c.JSON(200, data)
-		return
+func mapToWebsiteData(a, b [][]string) []WebsiteData {
+	return []WebsiteData{
+		convertOneSite(a),
+		convertOneSite(b),
 	}
-	c.JSON(400, gin.H{"error": "category not found"})
+}
+
+func convertOneSite(rows [][]string) WebsiteData {
+	if len(rows) == 0 {
+		return WebsiteData{}
+	}
+
+	site := rows[0][siteColumn]
+	acc := siteAccumulator{}
+
+	for _, row := range rows {
+		// col 0: timestamp label
+		acc.labels = append(acc.labels, row[timeColumn])
+
+		// col 3: latency
+		if v, err := strconv.Atoi(row[latencyColumn]); err == nil {
+			acc.latency = append(acc.latency, v)
+		}
+
+		// col 4: jitter
+		if v, err := strconv.Atoi(row[jitterColumn]); err == nil {
+			acc.jitter = append(acc.jitter, v)
+		}
+	}
+
+	return WebsiteData{
+		Website: site,
+		Latency: MetricBlock{
+			Title:  "Latency (ms)",
+			Labels: acc.labels,
+			Data:   acc.latency,
+		},
+		Jitter: MetricBlock{
+			Title:  "Jitter (ms)",
+			Labels: acc.labels,
+			Data:   acc.jitter,
+		},
+		Hops: []Hop{}, // 忽略 hops
+	}
+}
+
+func getTargetRows(t string) ([][]string, [][]string) {
+	// 1. Read
+	file, err := os.Open(dataFilePath)
+	if err != nil {
+		log.Println("open file:", err)
+		return nil, nil
+	}
+	defer file.Close()
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		log.Println("read csv:", err)
+		return nil, nil
+	}
+	data := records[1:]
+
+	// 2. Filter
+	var filtered [][]string
+	for _, row := range data {
+		if len(row) > typeColumn && row[typeColumn] == t {
+			filtered = append(filtered, row)
+		}
+	}
+	if len(filtered) == 0 {
+		return [][]string{}, [][]string{}
+	}
+
+	// 3. Top 5
+	sort.Slice(filtered, func(i, j int) bool {
+		return filtered[i][timeColumn] > filtered[j][timeColumn]
+	})
+	var siteA, siteB string
+	var resultA, resultB [][]string
+	countsA, countsB := 0, 0
+
+	for _, row := range filtered {
+		site := row[siteColumn]
+		if siteA == "" {
+			siteA = site
+		}
+		if site == siteA && countsA < pick {
+			resultA = append(resultA, row)
+			countsA++
+			continue
+		}
+		if siteB == "" && site != siteA {
+			siteB = site
+		}
+		if site == siteB && countsB < pick {
+			resultB = append(resultB, row)
+			countsB++
+			continue
+		}
+		if countsA >= pick && countsB >= pick {
+			break
+		}
+	}
+
+	return reverseRows(resultA), reverseRows(resultB)
+}
+
+func reverseRows(rows [][]string) [][]string {
+	for i, j := 0, len(rows)-1; i < j; i, j = i+1, j-1 {
+		rows[i], rows[j] = rows[j], rows[i]
+	}
+	return rows
 }
