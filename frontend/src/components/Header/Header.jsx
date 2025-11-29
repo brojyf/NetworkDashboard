@@ -5,7 +5,7 @@ export default function Header() {
         <header className="header">
           <div className="content">
             <h1 className="title">Network Dashboard</h1>
-            <p className="subtitle">Latency • Packet Loss • Traceroute</p>
+            <p className="subtitle">Latency • Jitter • Traceroute</p>
           </div>
         </header>
     );
