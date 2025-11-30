@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: Network Dashboard API
+  version: 1.0.0
+  description: Returns website network metrics including latency, packet loss, and traceroute hops.
+
+servers:
+  - url: http://localhost:8080/api
+    description: Dev Server
+  - url: https://pat-jiang.dpdns.org/nd
+    description: Website Server
+
+paths:
+  /query:
+    get:
+      summary: Get network data based on selected website category
+      parameters:
+        - in: query
+          name: category
+          required: true
+          schema:
+            type: string
+            enum: ["search_engine", "cdn", "video_steam", "social", "cloud", "ai"]
+      responses:
+        "200":
+          description: network data from server websites
+          content:
+            application/json:
+              schema:
+                type: array               
+                items:
+                  type: object            
+                  properties:
+                    website:
+                      type: string
+                    latency:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        labels:
+                          type: array
+                          items: { type: string }
+                        data:
+                          type: array
+                          items: { type: number }
+
+                    jitter:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        labels:
+                          type: array
+                          items: { type: string }
+                        data:
+                          type: array
+                          items: { type: number }
+
+                    hops:
+                      type: array
+                      description: Traceroute hops
+                      items:
+                        type: object
+                        properties:
+                          hop:
+                            type: integer
+                          ip:
+                            type: string
+                            nullable: true
+                          hostname:
+                            type: string
+                            nullable: true
+                          latency:
+                            type: array
+                            items:
+                              type: number
