@@ -44,6 +44,32 @@ and loaded enough data for meaningful visualization.
    to allow the backend enough time to load and prepare the data.  
 
 
+## Tools
+<p align="left">
+  <a href="https://go.dev/" target="_blank" rel="noreferrer">
+    <img src="https://go.dev/images/go-logo-blue.svg" alt="Go" height="48" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://react.dev/" target="_blank" rel="noreferrer">
+    <img src="https://react.dev/favicon-32x32.png" alt="React" height="48" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://gin-gonic.com/" target="_blank" rel="noreferrer">
+    <img src="https://gin-gonic.com/_astro/gin.D6H2T_2v_ZD2G7l.webp" alt="Gin" height="48" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://www.docker.com/" target="_blank" rel="noreferrer">
+    <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker" height="48" />
+  </a>
+</p>
+
+- [Go](https://go.dev/) - Backend language
+- [React](https://react.dev/) - Frontend UI library
+- [Gin](https://gin-gonic.com/) - HTTP web framework
+- [Docker](https://www.docker.com/) - Build and runtime container
+- [Bash](https://www.gnu.org/software/bash/) - Data collection script runtime
+
+
 ## Schedule
 |   Week   | Plan |
 | -------- | ---- |
