@@ -1,16 +1,28 @@
 # Network Dashboard
 Network Dashboard is a lightweight monitoring tool that continuously
-measures network performance across multiple websites — including 
-latency, jitter, and traceroute hops — and visualizes the data in 
-an interactive frontend. The backend periodically collects metrics 
-using built-in system tools, stores the results, and exposes them 
-through an API for display. Since initial data collection 
+measures network performance across multiple websites and visualizes the data in 
+an interactive frontend.  
+
+![](./demo.png)
+
+
+## Things to know
+- Since initial data collection 
 takes time, we recommend waiting about five minutes before accessing 
 the dashboard to ensure the backend services have fully initialized 
 and loaded enough data for meaningful visualization.
+- Since `traceroute` behaves differently inside a container due to Docker’s
+   isolated networking namespace, running with host networking helps preserve
+   accurate hop information. On Linux, you can use `--network=host`. Other
+   operating systems (e.g., macOS, Windows) do not support host networking
+   directly, so port mapping is required.
+
 
 ## How to use
-### Dependency: Docker
+### Dependency
+- Docker
+
+### Steps
 1. Build the image:
 ```shell
   git clone https://github.com/brojyf/NetworkDashboard.git nd
@@ -18,11 +30,7 @@ and loaded enough data for meaningful visualization.
   docker build -t network-dashboard . 
 ```
 2. Run the container:  
-  Since `traceroute` behaves differently inside a container due to Docker’s
-   isolated networking namespace, running with host networking helps preserve
-   accurate hop information. On Linux, you can use `--network=host`. Other
-   operating systems (e.g., macOS, Windows) do not support host networking
-   directly, so port mapping is required.  
+    
    For Linux:
 ```shell
   docker run --network=host -it network-dashboard

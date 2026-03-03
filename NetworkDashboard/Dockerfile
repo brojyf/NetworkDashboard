@@ -33,7 +33,7 @@ COPY config ./config
 COPY scripts ./scripts
 COPY start.sh ./start.sh
 
-RUN chmod +x /app/scripts/ping_test.sh /app/start.sh \
+RUN chmod +x /app/scripts/script.sh /app/start.sh \
     && chown -R appuser:appuser /app
 
 EXPOSE 8080

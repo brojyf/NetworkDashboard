@@ -3,7 +3,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# Start data collection in background before launching API server
-"$SCRIPT_DIR/scripts/ping_test.sh" &
+trap 'pkill -P $$ || true' EXIT INT TERM
 
-exec "$SCRIPT_DIR/server"
+"$SCRIPT_DIR/scripts/script.sh" &
+"$SCRIPT_DIR/server" &
+wait -n

@@ -3,14 +3,14 @@ package main
 import (
 	"log"
 
-	"github.com/brojyf/NetworkDashboard/internal/Handler"
+	"github.com/brojyf/NetworkDashboard/internal/handler"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
 
-	router.GET("/api/query", Handler.Handler)
+	router.GET("/api/query", handler.Handler)
 
 	// Serve static
 	router.Static("/assets", "./static/assets")

@@ -1,4 +1,13 @@
+# IDE
 **/.idea
-**/.DS_Store
-backend/data
 
+# File System
+**/.DS_Store
+
+# Caches
+**/.gocache/
+**/data
+
+# Docs
+*.pdf
+*.pages
