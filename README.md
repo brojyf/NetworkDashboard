@@ -3,7 +3,7 @@ Network Dashboard is a lightweight monitoring tool that continuously
 measures network performance across multiple websites and visualizes the data in 
 an interactive frontend.  
 
-![](./demo.png)
+![](./dev/demo.png)
 
 
 ## Things to know
